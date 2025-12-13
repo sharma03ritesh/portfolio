@@ -55,6 +55,32 @@ overlay.addEventListener("click", testimonialsModalFunc);
 
 
 
+// project modal variables
+// Project modal logic
+const projectModal = document.getElementById("projectModal");
+const projectIframe = document.getElementById("modalIframe");
+const projectModalBtns = document.querySelectorAll(".project-modal-btn");
+
+if (projectModal && projectIframe && projectModalBtns.length > 0) {
+  projectModalBtns.forEach(btn => {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation(); // Prevent any other modal triggers
+      projectModal.style.display = "block";
+      projectIframe.src = btn.getAttribute("data-project-url");
+    });
+  });
+  // Close handler (assumes X close button is always first button in project modal)
+  const projectModalCloseBtn = projectModal.querySelector("button");
+  if (projectModalCloseBtn) {
+    projectModalCloseBtn.addEventListener("click", function () {
+      projectModal.style.display = "none";
+      projectIframe.src = "";
+    });
+  }
+}
+
+
+
 // custom select variables
 // const select = document.querySelector("[data-select]");
 // const selectItems = document.querySelectorAll("[data-select-item]");
