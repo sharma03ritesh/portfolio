@@ -201,22 +201,22 @@ form.addEventListener("submit", async (e) => {
       form.reset();
       showToast("✅ Form submitted successfully!");
       document.getElementById("contact-btn").innerHTML = "Message Submitted ✔️";
-      setTimeout(function(){
+      setTimeout(function () {
         document.getElementById("contact-btn").innerHTML = "Send Message";
-      },1000);
+      }, 1000);
     } else {
       showToast("❌ Something went wrong, try again.");
       document.getElementById("contact-btn").innerHTML = "Message Failed";
-      setTimeout(function(){
+      setTimeout(function () {
         document.getElementById("contact-btn").innerHTML = "Send Message";
-      },1000);
+      }, 1000);
     }
   } catch (error) {
     showToast("⚠️ Network error.");
     document.getElementById("contact-btn").innerHTML = "Message Failed";
-    setTimeout(function(){
+    setTimeout(function () {
       document.getElementById("contact-btn").innerHTML = "Send Message";
-    },1000);
+    }, 1000);
   }
 });
 
@@ -229,4 +229,31 @@ function showToast(message) {
     toast.style.opacity = "0";
     toast.style.visibility = "hidden";
   }, 3000); // hide after 3 sec
+}
+
+function downloadResume() {
+  const fileUrl = "/assets/resume/Ritesh_Sharma_Resume.pdf";   // IMPORTANT: use absolute path
+  const fileName = "Ritesh_Sharma_Resume.pdf";
+
+  fetch(fileUrl)
+    .then(response => {
+      if (!response.ok) throw new Error("File not found");
+      return response.blob();
+    })
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(err => {
+      alert("Resume file not found ❌");
+      console.error(err);
+    });
 }
