@@ -28,15 +28,15 @@ function Portfolio() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0d1117', color: '#e6edf3' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 20px' }}>
-        <div style={{ display: 'flex', gap: 28, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-          <div style={{ width: 260, flexShrink: 0, minWidth: 0 }}>
+      <div className="main-container">
+        <div className="main-layout">
+          <div className="sidebar-container">
             <Sidebar />
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="content-container">
             <div className="card" style={{ overflow: 'hidden' }}>
               <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
-              <div style={{ padding: '32px 28px' }}>
+              <div style={{ padding: '32px 28px' }} className="content-padding">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeSection}

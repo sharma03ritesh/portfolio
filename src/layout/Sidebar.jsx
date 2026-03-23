@@ -9,7 +9,7 @@ const Sidebar = () => {
     : { ...portfolioData, avatar_url: portfolioData.avatar, socials: portfolioData.socials, resume_url: null };
 
   return (
-    <div className="card" style={{ padding: '24px', position: 'sticky', top: 20 }}>
+    <div className="sidebar-card">
       {/* Avatar + Name */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: 20 }}>
         <img

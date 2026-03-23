@@ -8,7 +8,7 @@ const Experience = () => {
   return (
     <div>
       {/* Education Header with Download */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
         <p className="section-title" style={{ marginBottom: 0 }}>Education</p>
         
         {resume_url && (

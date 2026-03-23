@@ -269,6 +269,108 @@ img {
   animation: pulse-green 2s infinite;
 }
 
+/* ─── Responsive Layout ────────────────────────────── */
+.main-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.main-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.sidebar-container {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.sidebar-card {
+  background: #161b22;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  padding: 24px;
+  position: sticky;
+  top: 20px;
+}
+
+.content-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.content-padding {
+  padding: 32px 28px;
+}
+
+/* Base media queries */
+@media (max-width: 991px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .sidebar-container {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .sidebar-card {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 24px 16px;
+  }
+
+  .section-title {
+    font-size: 13px;
+  }
+  
+  .card {
+    padding: 20px !important;
+  }
+  
+  .content-padding {
+    padding: 24px 20px;
+  }
+  
+  .nav-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: 16px 12px;
+  }
+  
+  .sidebar-card {
+    padding: 16px;
+  }
+
+  .content-padding {
+    padding: 20px 16px;
+  }
+  
+  /* Stack navbar tabs if very narrow */
+  .nav-tabs-container {
+    gap: 2px !important;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .nav-tab {
+    white-space: nowrap;
+  }
+}
+
 @keyframes pulse-green {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }

@@ -9,7 +9,7 @@ const tabs = [
 ];
 
 const Navbar = ({ activeSection, setActiveSection }) => (
-  <div style={{ borderBottom: '1px solid #21262d', padding: '12px 20px', display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+  <div className="nav-tabs-container" style={{ borderBottom: '1px solid #21262d', padding: '12px 20px', display: 'flex', gap: 4, flexWrap: 'nowrap' }}>
     {tabs.map((tab) => (
       <button
         key={tab.id}
