@@ -1,12 +1,47 @@
 import React, { useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 const Contact = () => {
-  const [sent, setSent] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle, loading, success, error
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
+    setStatus('loading');
+
+    try {
+      // 1. Save to Supabase (Backup)
+      const { error: dbError } = await supabase
+        .from('messages')
+        .insert([formData]);
+
+      if (dbError) throw dbError;
+
+      // 2. Send Email via Web3Forms
+      // Note: You must get your FREE access key at web3forms.com and paste it below
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+          ...formData,
+          subject: `New Portfolio Message from ${formData.name}`,
+          to: 'riteshsharma89508@gmail.com'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Email sending failed');
+      }
+
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
@@ -18,19 +53,43 @@ const Contact = () => {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div>
             <label className="form-label">Full Name</label>
-            <input className="form-input" type="text" placeholder="John Doe" required />
+            <input
+              className="form-input"
+              type="text"
+              placeholder="John Doe"
+              required
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
           </div>
           <div>
             <label className="form-label">Email Address</label>
-            <input className="form-input" type="email" placeholder="john@example.com" required />
+            <input
+              className="form-input"
+              type="email"
+              placeholder="john@example.com"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
           </div>
           <div>
             <label className="form-label">Message</label>
-            <textarea className="form-input" rows={4} placeholder="What's on your mind?" required style={{ resize: 'vertical', fontFamily: 'inherit' }} />
+            <textarea
+              className="form-input"
+              rows={4}
+              placeholder="What's on your mind?"
+              required
+              style={{ resize: 'vertical', fontFamily: 'inherit' }}
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            />
           </div>
-          <button type="submit" className="btn-primary">
-            {sent ? (
+          <button type="submit" className="btn-primary" disabled={status === 'loading'}>
+            {status === 'loading' ? 'Sending...' : status === 'success' ? (
               <><CheckIcon /> Message Sent!</>
+            ) : status === 'error' ? (
+              'Failed to send. Try again.'
             ) : (
               <><SendIcon /> Send Message</>
             )}
@@ -67,13 +126,13 @@ const Contact = () => {
 
 const SendIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+    <line x1="22" x2="11" y1="2" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
   </svg>
 );
 
 const CheckIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="20 6 9 17 4 12"/>
+    <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
