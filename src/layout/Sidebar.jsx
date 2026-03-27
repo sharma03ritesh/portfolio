@@ -76,7 +76,7 @@ const Sidebar = () => {
       <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
         {(socials || []).map((s) => (
           <a key={s.id || s.name} href={s.url} target="_blank" rel="noopener noreferrer" className="social-icon" title={s.name}>
-            {s.icon_url ? s.icon_url : s.icon === 'LinkedIn' && <LinkedInIcon />}
+            {s.icon_url ? <img src={s.icon_url} height={'40px'} width={'40px'} /> : <LinkedInIcon />}
           </a>
         ))}
       </div>
