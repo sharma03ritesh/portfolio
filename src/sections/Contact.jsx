@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { getSettings } from '../lib/settings';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -17,13 +18,21 @@ const Contact = () => {
 
       if (dbError) throw dbError;
 
-      // 2. Send Email via Web3Forms
-      // Note: You must get your FREE access key at web3forms.com and paste it below
+      // 2. Resolve Web3Forms key: DB first, then env var
+      const settings = await getSettings();
+      const accessKey =
+        settings.web3forms_access_key || import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+      if (!accessKey) {
+        throw new Error('Web3Forms access key not configured. Set it in Admin → Settings.');
+      }
+
+      // 3. Send Email via Web3Forms
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+          access_key: accessKey,
           ...formData,
           subject: `New Portfolio Message from ${formData.name}`,
           to: 'riteshsharma89508@gmail.com'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { openUploadWidget } from '../../lib/cloudinary';
+  import { openUploadWidget } from '../../lib/cloudinary';
 import { usePortfolio } from '../../hooks/usePortfolioData';
 
 const ProfileTab = () => {
@@ -34,7 +34,7 @@ const ProfileTab = () => {
   return (
     <div className="space-y-6">
       <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '24px' }}>Edit Profile</h3>
-      
+
       {message && (
         <div style={{ background: message.type === 'error' ? '#f8514922' : '#23863622', border: `1px solid ${message.type === 'error' ? '#f85149' : '#238636'}`, color: message.type === 'error' ? '#f85149' : '#3fb950', padding: '12px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px' }}>
           {message.text}
@@ -50,43 +50,43 @@ const ProfileTab = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
           <div>
             <label className="form-label">Full Name</label>
-            <input className="form-input" type="text" value={formData.name || ''} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+            <input className="form-input" type="text" value={formData.name || ''} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
           </div>
           <div>
             <label className="form-label">Title</label>
-            <input className="form-input" type="text" value={formData.title || ''} onChange={(e) => setFormData({...formData, title: e.target.value})} />
+            <input className="form-input" type="text" value={formData.title || ''} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
           </div>
         </div>
 
         <div>
           <label className="form-label">Bio (One paragraph per line)</label>
-          <textarea className="form-input" rows={6} value={(formData.bio || []).join('\n')} onChange={(e) => setFormData({...formData, bio: e.target.value.split('\n')})} />
+          <textarea className="form-input" rows={6} value={(formData.bio || []).join('\n')} onChange={(e) => setFormData({ ...formData, bio: e.target.value.split('\n') })} />
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
           <div>
             <label className="form-label">Email</label>
-            <input className="form-input" type="email" value={formData.email || ''} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+            <input className="form-input" type="email" value={formData.email || ''} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
           </div>
           <div>
             <label className="form-label">Phone</label>
-            <input className="form-input" type="text" value={formData.phone || ''} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+            <input className="form-input" type="text" value={formData.phone || ''} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
           <div>
             <label className="form-label">Birthday</label>
-            <input className="form-input" type="text" value={formData.birthday || ''} onChange={(e) => setFormData({...formData, birthday: e.target.value})} />
+            <input className="form-input" type="text" value={formData.birthday || ''} onChange={(e) => setFormData({ ...formData, birthday: e.target.value })} />
           </div>
           <div>
             <label className="form-label">Location</label>
-            <input className="form-input" type="text" value={formData.location || ''} onChange={(e) => setFormData({...formData, location: e.target.value})} />
+            <input className="form-input" type="text" value={formData.location || ''} onChange={(e) => setFormData({ ...formData, location: e.target.value })} />
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <input type="checkbox" checked={formData.available || false} onChange={(e) => setFormData({...formData, available: e.target.checked})} />
+          <input type="checkbox" checked={formData.available || false} onChange={(e) => setFormData({ ...formData, available: e.target.checked })} />
           <label className="form-label" style={{ marginBottom: 0 }}>Available for Work</label>
         </div>
 

@@ -29,6 +29,7 @@ create table if not exists socials (
   url text not null,
   icon text not null,
   sort_order int default 0,
+  icon_url text null,
   created_at timestamptz default now()
 );
 
@@ -84,6 +85,14 @@ create table if not exists projects (
   created_at timestamptz default now()
 );
 
+-- 8. SITE SETTINGS (key-value store for API keys / config)
+create table if not exists site_settings (
+  key text primary key,
+  value text default '',
+  label text default '',
+  updated_at timestamptz default now()
+);
+
 -- ============================================================
 -- Row Level Security (RLS)
 -- Public can READ all tables; only authenticated users can WRITE
@@ -96,6 +105,7 @@ alter table skills enable row level security;
 alter table education enable row level security;
 alter table experience enable row level security;
 alter table projects enable row level security;
+alter table site_settings enable row level security;
 
 -- READ policies (anon + authenticated)
 create policy "Public read profile" on profile for select using (true);
@@ -105,6 +115,7 @@ create policy "Public read skills" on skills for select using (true);
 create policy "Public read education" on education for select using (true);
 create policy "Public read experience" on experience for select using (true);
 create policy "Public read projects" on projects for select using (true);
+create policy "Public read site_settings" on site_settings for select using (true);
 
 -- WRITE policies (authenticated only)
 create policy "Auth write profile" on profile for all using (auth.role() = 'authenticated');
@@ -114,6 +125,7 @@ create policy "Auth write skills" on skills for all using (auth.role() = 'authen
 create policy "Auth write education" on education for all using (auth.role() = 'authenticated');
 create policy "Auth write experience" on experience for all using (auth.role() = 'authenticated');
 create policy "Auth write projects" on projects for all using (auth.role() = 'authenticated');
+create policy "Auth write site_settings" on site_settings for all using (auth.role() = 'authenticated');
 
 -- ============================================================
 -- Seed Data
@@ -122,10 +134,10 @@ insert into profile (name, title, email, phone, birthday, location, available)
 values ('Ritesh Sharma', 'Web Developer', 'riteshsharma89508@gmail.com', '+91 89508-30269', 'March 18, 2003', 'Sector 18/492 Huda Kaithal, Haryana, India', true)
 on conflict do nothing;
 
-insert into socials (name, url, icon, sort_order) values
-('LinkedIn', 'https://www.linkedin.com/in/ritesh-sharma-a22720281', 'LinkedIn', 0),
-('Twitter', 'https://x.com/Ritesh12121', 'Twitter', 1),
-('Instagram', 'https://www.instagram.com/ritesh.returns', 'Instagram', 2);
+insert into socials (name, url, icon, sort_order,icon_url) values
+('LinkedIn', 'https://www.linkedin.com/in/ritesh-sharma-a22720281', 'LinkedIn', 0, ''),
+('Twitter', 'https://x.com/Ritesh12121', 'Twitter', 1, ''),
+('Instagram', 'https://www.instagram.com/ritesh.returns', 'Instagram', 2, '');
 
 insert into services (title, description, icon, sort_order) values
 ('Web Development', 'High-quality development of sites at the professional level.', 'Globe', 0),

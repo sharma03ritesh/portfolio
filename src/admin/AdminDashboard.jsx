@@ -6,6 +6,8 @@ import ExperienceTab from './tabs/ExperienceTab';
 import ProjectsTab from './tabs/ProjectsTab';
 import ServicesTab from './tabs/ServicesTab';
 import ResumeTab from './tabs/ResumeTab';
+import SettingsTab from './tabs/SettingsTab';
+import SocialMediaTab from './tabs/SocialMediaTab';
 
 const AdminDashboard = ({ session }) => {
   const [activeTab, setActiveTab] = useState('profile');
@@ -17,20 +19,24 @@ const AdminDashboard = ({ session }) => {
   const tabs = [
     { id: 'profile', label: 'Profile' },
     { id: 'skills', label: 'Skills' },
+    { id: 'socials', label: 'Social Media' },
     { id: 'experience', label: 'Experience & Education' },
     { id: 'projects', label: 'Projects' },
     { id: 'services', label: 'Services' },
-    { id: 'resume', label: 'Resume & Storage' }
+    { id: 'resume', label: 'Resume & Storage' },
+    { id: 'settings', label: '⚙ Settings' }
   ];
 
   const renderTab = () => {
     switch (activeTab) {
       case 'profile': return <ProfileTab />;
       case 'skills': return <SkillsTab />;
+      case 'socials': return <SocialMediaTab />;
       case 'experience': return <ExperienceTab />;
       case 'projects': return <ProjectsTab />;
       case 'services': return <ServicesTab />;
       case 'resume': return <ResumeTab />;
+      case 'settings': return <SettingsTab />;
       default: return <ProfileTab />;
     }
   };
